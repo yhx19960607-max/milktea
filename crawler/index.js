@@ -3,21 +3,56 @@ const https = require("https");
 const { URL } = require("url");
 
 cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
+
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+function extractJson(text) {
+  if (!text || typeof text !== "string") return null;
+  const match = text.match(/\{[\s\S]*\}/);
+  if (!match) return null;
+  try { return JSON.parse(match[0]); }
+  catch { return null; }
+}
+
+function isOfficialDomain(url) {
+  if (!url) return { official: false };
+  try {
+    const hostname = new URL(url).hostname.toLowerCase();
+    for (const [brand, domains] of Object.entries(OFFICIAL_DOMAINS)) {
+      if (domains.some(d => hostname.includes(d))) return { brand, official: true };
+    }
+  } catch {}
+  return { official: false };
+}
+
+
 const db = cloud.database();
 
 const CANDIDATES = "milktea_candidates";
 
 const SEARCH_TARGETS = [
-  { brand: "蜜雪冰城", products: ["珍珠奶茶", "柠檬水", "冰淇淋红茶"] },
-  { brand: "CoCo都可", products: ["鲜芋奶茶", "珍珠奶茶", "三兄弟"] },
-  { brand: "一点点", products: ["波霸奶茶", "红茶玛奇朵", "四季奶青"] },
-  { brand: "古茗", products: ["珍珠奶茶", "龙井香青", "芝士奶盖"] },
-  { brand: "茶百道", products: ["豆乳玉露", "茉莉奶绿", "招牌芋圆奶茶"] },
-  { brand: "喜茶", products: ["多肉葡萄", "芝芝莓莓", "椰椰芒芒"] },
-  { brand: "奈雪的茶", products: ["霸气芝士草莓", "霸气橙子", "金色山脉宝藏茶"] },
-  { brand: "霸王茶姬", products: ["伯牙绝弦", "桂花龙井", "花田乌龙"] },
-  { brand: "沪上阿姨", products: ["血糯米奶茶", "杨枝甘露", "五谷奶茶"] },
-  { brand: "书亦烧仙草", products: ["烧仙草奶茶", "芋泥啵啵", "杨枝甘露"] },
+  // 头部品牌 (5款)
+  { brand: "蜜雪冰城", products: ["珍珠奶茶", "冰鲜柠檬水", "黑糖珍珠大圣", "摩天脆脆冰淇淋", "雪王草莓圣代"] },
+  { brand: "CoCo都可", products: ["鲜芋奶茶", "三兄弟", "珍珠奶茶", "百香果双响炮", "鲜百香双响炮"] },
+  { brand: "一点点", products: ["波霸奶茶", "红茶玛奇朵", "四季奶青", "冰淇淋红茶", "柠檬蜜"] },
+  { brand: "古茗", products: ["珍珠奶茶", "芝士奶盖", "龙井香青", "杨枝甘露", "黑糖珍珠鲜奶"] },
+  { brand: "茶百道", products: ["豆乳玉露", "茉莉奶绿", "招牌芋圆奶茶", "葡萄冻冻", "杨枝甘露"] },
+  // 高端品牌 (5款)
+  { brand: "喜茶", products: ["多肉葡萄", "芝芝莓莓", "椰椰芒芒", "芝芝桃桃", "多肉芒芒甘露"] },
+  { brand: "奈雪的茶", products: ["霸气芝士草莓", "霸气橙子", "霸气玉油柑", "金色山脉宝藏茶", "霸气杨梅"] },
+  { brand: "霸王茶姬", products: ["伯牙绝弦", "桂花龙井", "花田乌龙", "青青糯山", "春日桃桃"] },
+  { brand: "沪上阿姨", products: ["血糯米奶茶", "杨枝甘露", "五谷奶茶", "厚芋泥啵啵奶茶", "桂花酒酿"] },
+  { brand: "书亦烧仙草", products: ["烧仙草奶茶", "芋泥啵啵", "杨枝甘露", "葡萄冻冻", "黑糖珍珠鲜奶"] },
+  // 腰部品牌 (3款)
+  { brand: "瑞幸咖啡", products: ["生椰拿铁", "厚乳拿铁", "碧螺知春拿铁"] },
+  { brand: "茶颜悦色", products: ["幽兰拿铁", "声声乌龙", "烟火易冷"] },
+  { brand: "乐乐茶", products: ["草莓桃子酪酪", "脏脏茶", "黑糖珍珠鲜奶"] },
+  { brand: "7分甜", products: ["杨枝甘露", "芒果爽", "榴莲芒芒"] },
+  { brand: "益禾堂", products: ["烤奶", "益禾烤奶", "珍珠奶茶"] },
+  // 新锐品牌 (3款)
+  { brand: "茶话弄", products: ["桂花引", "梅占摇红", "南山烟雨"] },
+  { brand: "阿嬷手作", products: ["黑糖珍珠厚奶", "芋泥啵啵鲜奶", "柠檬茶"] },
+  { brand: "茶理宜世", products: ["玫瑰鲜奶", "茉莉鲜奶", "桂花鲜奶"] },
 ];
 
 const OFFICIAL_DOMAINS = {
@@ -33,83 +68,21 @@ const OFFICIAL_DOMAINS = {
   "书亦烧仙草": ["shuyi.com", "shuyitea.com"],
 };
 
+const AI_MODEL = "hy3";
+const AI_PROVIDER = process.env.AI_PROVIDER || "cloudbase";
+
 const CLOUDBASE_API_KEY = process.env.CLOUDBASE_API_KEY || "";
 const CLOUDBASE_ENV_ID = process.env.CLOUDBASE_ENV_ID || "cloudbase-d7gy238nvf2d68d9b";
-const AI_MODEL = process.env.AI_MODEL || "hunyuan-lite";
 
-// CloudBase AI endpoint (OpenAI-compatible)
-const AI_ENDPOINT = `https://${CLOUDBASE_ENV_ID}.api.tcloudbasegateway.com/v1/ai/chat/completions`;
-
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-
-function httpRequest(url, body, headers) {
+async function aiChatViaApiKey(messages, modelOverride, groupOverride) {
+  if (!CLOUDBASE_API_KEY) throw new Error("CLOUDBASE_API_KEY 未设置");
+  const body = JSON.stringify({ model: modelOverride || AI_MODEL, messages });
   return new Promise((resolve, reject) => {
-    const parsed = new URL(url);
-    const options = {
-      hostname: parsed.hostname,
-      path: parsed.pathname + parsed.search,
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        ...headers,
-      },
-    };
-    const req = https.request(options, (res) => {
-      let data = "";
-      res.on("data", (chunk) => (data += chunk));
-      res.on("end", () => {
-        try { resolve(JSON.parse(data)); }
-        catch { resolve(data); }
-      });
-    });
-    req.on("error", reject);
-    req.setTimeout(15000, () => { req.destroy(); reject(new Error("Request timeout")); });
-    if (body) req.write(JSON.stringify(body));
-    req.end();
-  });
-}
-
-function extractJson(text) {
-  if (!text || typeof text !== "string") return null;
-  const match = text.match(/\{[\s\S]*\}/);
-  if (!match) return null;
-  try { return JSON.parse(match[0]); }
-  catch { return null; }
-}
-
-function isOfficialDomain(url) {
-  if (!url) return false;
-  try {
-    const hostname = new URL(url).hostname.toLowerCase();
-    for (const [brand, domains] of Object.entries(OFFICIAL_DOMAINS)) {
-      if (domains.some(d => hostname.includes(d))) return { brand, official: true };
-    }
-  } catch {}
-  return { official: false };
-}
-
-async function aiChat(messages) {
-  if (!CLOUDBASE_API_KEY) {
-    throw new Error("请在云函数环境变量中设置 CLOUDBASE_API_KEY（小程序成长计划 → 云开发服务端密钥）");
-  }
-
-  const body = JSON.stringify({
-    model: AI_MODEL,
-    messages,
-    enable_search: true,
-    temperature: 0.1,
-  });
-
-  return new Promise((resolve, reject) => {
-    const parsed = new URL(AI_ENDPOINT);
     const req = https.request({
-      hostname: parsed.hostname,
-      path: parsed.pathname + parsed.search,
+      hostname: `${CLOUDBASE_ENV_ID}.api.tcloudbasegateway.com`,
+      path: `/v1/ai/${groupOverride || "cloudbase"}/chat/completions`,
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${CLOUDBASE_API_KEY}`,
-      },
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${CLOUDBASE_API_KEY}` },
     }, (res) => {
       let data = "";
       res.on("data", (chunk) => (data += chunk));
@@ -125,11 +98,17 @@ async function aiChat(messages) {
   });
 }
 
-async function searchNutrition(brand, product) {
-  if (!CLOUDBASE_API_KEY) {
-    return { error: "请在云函数环境变量中设置 CLOUDBASE_API_KEY" };
+async function aiChat(messages) {
+  try {
+    const ai = cloud.ai();
+    const model = ai.createModel(AI_PROVIDER);
+    return await model.generateText({ model: AI_MODEL, messages });
+  } catch (sdkError) {
+      return await aiChatViaApiKey(messages);
   }
+}
 
+async function searchNutrition(brand, product) {
   const prompt = `请搜索"${brand}"的"${product}"的营养成分/热量信息（大卡/kcal/卡路里）。优先找品牌官方公布的数据。返回JSON格式：
 {
   "name": "产品名",
@@ -146,14 +125,25 @@ async function searchNutrition(brand, product) {
 }
 如果确实找不到可靠数据，返回 null。只返回JSON，不要多余文字。`;
 
-  const response = await aiChat([
-    { role: "system", content: "你是一个营养数据搜索助手，负责搜索中国奶茶品牌的官方营养信息。只返回JSON格式结果。" },
-    { role: "user", content: prompt },
-  ]);
+  let response;
+  try {
+    response = await aiChat([
+      { role: "system", content: "你是一个营养数据搜索助手，负责搜索中国奶茶品牌的官方营养信息。只返回JSON格式结果。" },
+      { role: "user", content: prompt },
+    ]);
+  } catch (error) {
+    return { error: `AI 调用失败: ${error.message || "未知错误"}` };
+  }
 
-  const content = response?.choices?.[0]?.message?.content || "";
+  console.log("AI Response:", JSON.stringify(response).substring(0, 500));
+
+  let content = response?.text || "";
+  if (!content && response?.choices?.[0]?.message?.content) {
+    content = response.choices[0].message.content;
+  }
   const parsed = extractJson(content);
-  if (!parsed || !parsed.totalKcal) return { error: "AI 未返回有效数据" };
+  if (content.trim() === "null" || content.trim() === "Null" || !content.trim()) return { error: "AI 表示找不到可靠数据" };
+  if (!parsed || !parsed.totalKcal) return { error: "AI_UNPARSED type:" + typeof content + " val:" + (content || "EMPTY").substring(0, 150) };
 
   const domainCheck = isOfficialDomain(parsed.sourceUrl);
   const sourceType = domainCheck.official ? "official" : "public_web";
@@ -179,9 +169,20 @@ async function writeCandidate(item) {
   const now = Date.now();
   return await db.collection(CANDIDATES).add({
     data: {
-      ...item,
+      name: item.name || "未知产品",
+      brand: item.brand || "未知品牌",
+      size: item.size || "中杯",
+      volume: item.volume || 500,
+      sugar: item.sugar || "标准糖",
+      ice: item.ice || "正常冰",
+      toppings: item.toppings || [],
+      totalKcal: item.totalKcal,
+      kcalPer100ml: item.kcalPer100ml || 0,
       baseKcal: item.totalKcal,
       toppingKcal: 0,
+      sourceType: item.sourceType || "public_web",
+      sourceUrl: item.sourceUrl || "",
+      sourceProvider: item.sourceProvider || "",
       status: "pending",
       createdAt: now,
       ingestedAt: now,
@@ -205,7 +206,7 @@ async function triggerReview() {
 
 async function crawl(event = {}) {
   const now = Date.now();
-  if (!AI_API_KEY) {
+  if (false) { // AI is now built-in via cloud.extend.AI
     return { success: false, errMsg: "请在云函数「环境变量」中设置 CLOUDBASE_API_KEY" };
   }
 
@@ -248,14 +249,47 @@ async function crawl(event = {}) {
   return { success: true, summary, reviewResult };
 }
 
+
+async function probeModels() {
+  const results = {};
+  const models = ["hunyuan-lite", "hunyuan", "deepseek-v3", "deepseek-r1", "hunyuan-turbo", "hunyuan-pro", "gpt-3.5-turbo"];
+  for (const model of models) {
+    try {
+      const response = await aiChat([{ role: "user", content: "回复ok" }], model);
+      results[model] = response?.choices ? "OK" : (response?.code || "unknown_error");
+    } catch (error) {
+      results[model] = error.message;
+    }
+  }
+  return results;
+}
+
 exports.main = async (event = {}) => {
   try {
     if (event.action === "crawl" || event.Type === "Timer") {
       return await crawl(event);
     }
+    if (event.action === "debugAI") {
+      try {
+        const res = await aiChatViaApiKey([{ role: "user", content: "回复ok" }]);
+        return { success: true, raw: JSON.stringify(res).substring(0, 300) };
+      } catch (e) {
+        return { success: false, error: e.message };
+      }
+    }
+    if (event.action === "cleanup") {
+      // Delete ALL crawled candidates to start fresh
+      const allCrawled = await db.collection(CANDIDATES).where({ crawledBy: "milkTeaCrawler" }).get();
+      let deleted = 0;
+      for (const doc of allCrawled.data) {
+        await db.collection(CANDIDATES).doc(doc._id).remove();
+        deleted++;
+      }
+      return { success: true, deleted };
+    }
     if (event.action === "status") {
       const count = await db.collection(CANDIDATES).where({ crawledBy: "milkTeaCrawler" }).count();
-      return { success: true, crawledCount: count.total, aiConfigured: !!CLOUDBASE_API_KEY, model: AI_MODEL };
+      return { success: true, crawledCount: count.total, aiConfigured: true, model: AI_MODEL, provider: AI_PROVIDER };
     }
     return { success: false, errMsg: "Unknown action. Use: crawl / status" };
   } catch (error) {

@@ -2,5 +2,7 @@ node_modules/
 .DS_Store
 .env
 *.log
+ai-srp-current.png
+.figma-mcp-cache/
 __pycache__/
 .pytest_cache/
