@@ -1,0 +1,9 @@
+{
+  "name": "milkTeaCrawler",
+  "version": "1.0.0",
+  "description": "自动采集奶茶品牌营养数据",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "triggers": [
+    {
+      "name": "daily-crawl",
+      "type": "timer",
+      "config": "0 0 8 * * * *"
+    }
+  ],
+  "timeout": 60
+}
