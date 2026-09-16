@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="3000" height="1780" viewBox="0 0 3000 1780">
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="24" flood-color="#0F172A" flood-opacity="0.10"/>
+    </filter>
+    <linearGradient id="headerFill" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1D6FF2"/>
+      <stop offset="100%" stop-color="#2FD0A5"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M1 1 L11 6 L1 11 Z" fill="#64748B"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M1 1 L11 6 L1 11 Z" fill="#2F6FEB"/>
+    </marker>
+  </defs>
+
+  <rect width="3000" height="1780" fill="#F1F5FB"/>
+  <rect x="48" y="44" width="2904" height="106" rx="26" fill="url(#headerFill)"/>
+  <text x="104" y="112" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="46" font-weight="700" fill="#fff">D+奶茶能量计算器 · 当前 UI 交互图</text>
+  <text x="2900" y="112" text-anchor="end" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="28" fill="#E6F7F1">更新时间：2026-09-10</text>
+
+  <g font-family="PingFang SC, Microsoft YaHei, sans-serif">
+    <rect x="78" y="232" width="360" height="390" rx="30" fill="#fff" filter="url(#shadow)"/>
+    <text x="118" y="302" font-size="32" font-weight="700" fill="#12203A">档案初始化</text>
+    <rect x="118" y="338" width="280" height="64" rx="16" fill="#EEF6FF"/><text x="258" y="378" text-anchor="middle" font-size="24" fill="#2B5B87">微信登录</text>
+    <rect x="118" y="422" width="280" height="64" rx="16" fill="#F6F7FB"/><text x="258" y="462" text-anchor="middle" font-size="24" fill="#44546A">微信头像</text>
+    <rect x="118" y="506" width="280" height="64" rx="16" fill="#F6F7FB"/><text x="258" y="546" text-anchor="middle" font-size="24" fill="#44546A">年龄 / 身高 / 体重 / 性别</text>
+    <rect x="118" y="576" width="280" height="26" rx="10" fill="#E9FBF4"/>
+
+    <rect x="618" y="172" width="460" height="640" rx="34" fill="#fff" filter="url(#shadow)"/>
+    <text x="662" y="238" font-size="34" font-weight="700" fill="#12203A">首页</text>
+    <text x="1038" y="238" text-anchor="end" font-size="24" fill="#68798F">今日余额</text>
+    <rect x="662" y="276" width="372" height="122" rx="24" fill="#F0F8FF"/>
+    <text x="696" y="352" font-size="56" font-weight="700" fill="#1D6FF2">2.5</text><text x="800" y="352" font-size="28" fill="#44546A">杯</text>
+    <rect x="662" y="418" width="372" height="126" rx="24" fill="#fff" stroke="#DDE6F3"/>
+    <rect x="688" y="452" width="320" height="16" rx="8" fill="#E8EEF7"/><rect x="688" y="452" width="206" height="16" rx="8" fill="#1D6FF2"/>
+    <text x="688" y="508" font-size="24" fill="#44546A">今日摄入 920 kcal</text>
+    <text x="1008" y="508" text-anchor="end" font-size="24" fill="#44546A">总消耗 1870 kcal</text>
+    <rect x="662" y="568" width="114" height="96" rx="20" fill="#EEF6FF"/><text x="719" y="612" text-anchor="middle" font-size="24" fill="#2B5B87">拍餐</text>
+    <rect x="790" y="568" width="114" height="96" rx="20" fill="#EEF6FF"/><text x="847" y="612" text-anchor="middle" font-size="24" fill="#2B5B87">运动</text>
+    <rect x="918" y="568" width="116" height="96" rx="20" fill="#EEF6FF"/><text x="976" y="612" text-anchor="middle" font-size="24" fill="#2B5B87">奶茶</text>
+    <rect x="662" y="688" width="372" height="94" rx="22" fill="#FFF6E7"/>
+    <text x="692" y="728" font-size="24" font-weight="600" fill="#8A5A00">今晚做什么运动可以喝？</text>
+    <text x="692" y="762" font-size="22" fill="#916B21">喝超了可补回来，省下来也能留给明天</text>
+
+    <rect x="1188" y="212" width="460" height="560" rx="34" fill="#fff" filter="url(#shadow)"/>
+    <text x="1232" y="278" font-size="34" font-weight="700" fill="#12203A">每日记录</text>
+    <rect x="1438" y="248" width="168" height="44" rx="22" fill="#F3F6FB"/><text x="1522" y="278" text-anchor="middle" font-size="24" fill="#44546A">2026-09-10</text>
+    <rect x="1232" y="312" width="372" height="112" rx="20" fill="#F8FAFD"/>
+    <text x="1264" y="350" font-size="24" fill="#25344B">米饭</text><text x="1264" y="382" font-size="20" fill="#6B7B90">200 g · 232 kcal</text>
+    <text x="1564" y="366" text-anchor="end" font-size="22" fill="#B3563B">删除</text>
+    <rect x="1232" y="444" width="372" height="112" rx="20" fill="#F8FAFD"/>
+    <text x="1264" y="482" font-size="24" fill="#25344B">快走</text><text x="1264" y="514" font-size="20" fill="#6B7B90">微信步数 · 8,000 步</text>
+    <text x="1564" y="498" text-anchor="end" font-size="22" fill="#B3563B">删除</text>
+    <rect x="1232" y="588" width="372" height="64" rx="18" fill="#EEF6FF"/><text x="1418" y="630" text-anchor="middle" font-size="24" fill="#2B5B87">添加饮食</text>
+    <rect x="1232" y="672" width="372" height="64" rx="18" fill="#EEF6FF"/><text x="1418" y="714" text-anchor="middle" font-size="24" fill="#2B5B87">添加运动</text>
+
+    <rect x="1788" y="172" width="500" height="640" rx="34" fill="#fff" filter="url(#shadow)"/>
+    <text x="1832" y="238" font-size="34" font-weight="700" fill="#12203A">我的</text>
+    <text x="2248" y="238" text-anchor="end" font-size="24" fill="#68798F">档案与趋势</text>
+    <rect x="1832" y="276" width="180" height="64" rx="18" fill="#F6F7FB"/><text x="1922" y="316" text-anchor="middle" font-size="24" fill="#44546A">更改头像</text>
+    <rect x="2032" y="276" width="216" height="64" rx="18" fill="#F6F7FB"/><text x="2140" y="316" text-anchor="middle" font-size="24" fill="#44546A">身高 / 体重 / 年龄</text>
+    <rect x="1832" y="362" width="180" height="64" rx="18" fill="#F6F7FB"/><text x="1922" y="402" text-anchor="middle" font-size="24" fill="#44546A">性别</text>
+    <rect x="2032" y="362" width="216" height="64" rx="18" fill="#F6F7FB"/><text x="2140" y="402" text-anchor="middle" font-size="24" fill="#44546A">日常活动量</text>
+    <rect x="1832" y="452" width="416" height="80" rx="22" fill="#F0F8FF"/>
+    <text x="1866" y="502" font-size="24" fill="#2B5B87">基础代谢 1290 kcal · 总消耗 1870 kcal</text>
+    <rect x="1832" y="554" width="416" height="94" rx="22" fill="#fff" stroke="#DDE6F3"/>
+    <rect x="1868" y="596" width="52" height="30" fill="#2FD0A5"/><rect x="1930" y="580" width="52" height="46" fill="#2FD0A5"/><rect x="1992" y="566" width="52" height="60" fill="#2FD0A5"/><rect x="2054" y="604" width="52" height="22" fill="#2FD0A5"/><rect x="2116" y="622" width="52" height="4" fill="#DDE6F3"/>
+    <text x="1868" y="638" font-size="22" fill="#6B7B90">最近 7 天</text>
+    <rect x="1832" y="672" width="416" height="84" rx="22" fill="#F4FFF9"/>
+    <text x="1866" y="708" font-size="24" fill="#2C715A">云端同步：已同步</text><text x="1866" y="736" font-size="22" fill="#587C6D">最近同步 10:32 · 立即同步</text>
+
+    <rect x="2448" y="96" width="480" height="480" rx="34" fill="#fff" filter="url(#shadow)"/>
+    <text x="2492" y="162" font-size="34" font-weight="700" fill="#12203A">添加饮食</text>
+    <rect x="2492" y="196" width="396" height="104" rx="22" fill="#F6F7FB"/>
+    <text x="2524" y="238" font-size="24" fill="#44546A">拍照 / 选图 · OCR 菜单</text>
+    <text x="2524" y="270" font-size="22" fill="#6B7B90">识别结果可修改后保存</text>
+    <rect x="2492" y="322" width="396" height="60" rx="18" fill="#EAF1FF"/><text x="2690" y="362" text-anchor="middle" font-size="24" fill="#27548C">长文本粘贴菜单</text>
+    <rect x="2492" y="404" width="120" height="58" rx="18" fill="#F8FAFD"/><text x="2552" y="442" text-anchor="middle" font-size="22" fill="#44546A">搜索</text>
+    <rect x="2624" y="404" width="120" height="58" rx="18" fill="#F8FAFD"/><text x="2684" y="442" text-anchor="middle" font-size="22" fill="#44546A">分量</text>
+    <rect x="2756" y="404" width="132" height="58" rx="18" fill="#F8FAFD"/><text x="2822" y="442" text-anchor="middle" font-size="22" fill="#44546A">热量</text>
+    <rect x="2492" y="488" width="396" height="54" rx="18" fill="#2F6FEB"/><text x="2690" y="524" text-anchor="middle" font-size="24" fill="#fff">保存饮食</text>
+
+    <rect x="2448" y="646" width="480" height="546" rx="34" fill="#fff" filter="url(#shadow)"/>
+    <text x="2492" y="712" font-size="34" font-weight="700" fill="#12203A">添加运动</text>
+    <rect x="2492" y="744" width="396" height="78" rx="20" fill="#F4FFF9"/>
+    <text x="2524" y="776" font-size="24" fill="#2C715A">Apple 健康桥接引导</text>
+    <text x="2524" y="806" font-size="22" fill="#587C6D">微信读取后再同步步数</text>
+    <rect x="2492" y="842" width="190" height="60" rx="18" fill="#EEF6FF"/><text x="2587" y="880" text-anchor="middle" font-size="24" fill="#2B5B87">重新同步</text>
+    <rect x="2698" y="842" width="190" height="60" rx="18" fill="#FFF4E4"/><text x="2793" y="880" text-anchor="middle" font-size="24" fill="#8A5A00">授权设置</text>
+    <rect x="2492" y="920" width="396" height="66" rx="18" fill="#F8FAFD"/><text x="2524" y="962" font-size="24" fill="#44546A">运动类型</text>
+    <rect x="2492" y="1004" width="396" height="66" rx="18" fill="#F8FAFD"/><text x="2524" y="1046" font-size="24" fill="#44546A">时长（分钟）</text>
+    <rect x="2492" y="1088" width="396" height="60" rx="18" fill="#2F6FEB"/><text x="2690" y="1128" text-anchor="middle" font-size="24" fill="#fff">保存运动</text>
+
+    <rect x="1788" y="896" width="500" height="400" rx="34" fill="#fff" filter="url(#shadow)"/>
+    <text x="1832" y="962" font-size="34" font-weight="700" fill="#12203A">奶茶推荐</text>
+    <rect x="1832" y="996" width="416" height="102" rx="22" fill="#EAF7F2"/>
+    <text x="1864" y="1032" font-size="24" fill="#225F4B">最推荐：纯茶 · 240 kcal</text>
+    <text x="1864" y="1066" font-size="22" fill="#5A7A6C">按今日余额自动匹配</text>
+    <rect x="2078" y="1024" width="150" height="50" rx="18" fill="#2FD0A5"/><text x="2153" y="1058" text-anchor="middle" font-size="24" fill="#fff">喝一杯</text>
+    <rect x="1832" y="1120" width="416" height="76" rx="20" fill="#F8FAFD"/>
+    <text x="1864" y="1150" font-size="24" fill="#25344B">奶茶库：42 款 · 22 款官方来源</text>
+    <text x="1864" y="1180" font-size="22" fill="#6B7B90">品牌 / 杯型 / 糖度 / 配料 / 热量</text>
+    <rect x="1832" y="1218" width="416" height="56" rx="18" fill="#EEF6FF"/><text x="2040" y="1254" text-anchor="middle" font-size="24" fill="#2B5B87">下拉刷新云端奶茶库</text>
+
+    <g stroke="#64748B" stroke-width="4" fill="none" marker-end="url(#arrow)">
+      <path d="M438 430 H598"/>
+      <path d="M1078 492 C1128 452 1148 442 1168 432"/>
+      <path d="M1648 492 C1700 452 1720 442 1740 432"/>
+      <path d="M2038 812 V876"/>
+      <path d="M976 664 C1046 836 1508 936 1768 936"/>
+      <path d="M288 622 C404 900 548 896 644 812"/>
+      <path d="M2298 412 C2370 330 2400 272 2428 214"/>
+      <path d="M2298 712 C2360 706 2400 700 2428 692"/>
+    </g>
+    <g font-size="22" fill="#64748B">
+      <text x="472" y="412">首次进入</text>
+      <text x="1086" y="420">查看全部</text>
+      <text x="1654" y="420">档案影响计算</text>
+      <text x="2054" y="852">保存后更新</text>
+      <text x="1234" y="900">奶茶写入记录</text>
+      <text x="356" y="804">返回首页</text>
+      <text x="2310" y="246">快速入口</text>
+      <text x="2306" y="678">快速入口</text>
+    </g>
+
+    <g>
+      <rect x="100" y="1420" width="18" height="18" rx="5" fill="#2F6FEB"/><text x="132" y="1438" font-size="24" fill="#44546A">核心主流程</text>
+      <rect x="318" y="1420" width="18" height="18" rx="5" fill="#2FD0A5"/><text x="350" y="1438" font-size="24" fill="#44546A">推荐 / 建议闭环</text>
+      <rect x="586" y="1420" width="18" height="18" rx="5" fill="#FFB443"/><text x="618" y="1438" font-size="24" fill="#44546A">依赖授权 / 数据确认</text>
+      <rect x="928" y="1420" width="18" height="18" rx="5" fill="#7A5AF8"/><text x="960" y="1438" font-size="24" fill="#44546A">自动同步 / 云端状态</text>
+    </g>
+
+    <rect x="118" y="1508" width="2764" height="166" rx="26" fill="#fff" stroke="#DCE6F2"/>
+    <text x="158" y="1568" font-size="30" font-weight="700" fill="#12203A">关键交互说明</text>
+    <text x="158" y="1616" font-size="24" fill="#516179">档案初始化 → 首页热量余额 → 拍餐 / 运动 / 奶茶记录 → 记录页确认删除 → 我的页维护档案、查看 7 天趋势和云同步。</text>
+  </g>
+</svg>

@@ -1,0 +1,43 @@
+{
+  "testId": "test_20260910_user_data",
+  "profile": {
+    "nickname": "测试用户",
+    "gender": "female",
+    "age": 28,
+    "height": 165,
+    "weight": 55,
+    "activity": "moderate"
+  },
+  "diary": {
+    "2026-09-10": {
+      "food": [
+        {
+          "id": "test-food-001",
+          "name": "米饭",
+          "grams": 200,
+          "calories": 232
+        },
+        {
+          "id": "test-food-002",
+          "name": "奶茶",
+          "grams": 1,
+          "calories": 380
+        }
+      ],
+      "exercise": [
+        {
+          "id": "test-exercise-001",
+          "name": "快走",
+          "source": "manual",
+          "kind": "workout",
+          "minutes": 30,
+          "calories": 138,
+          "startTime": "",
+          "endTime": "",
+          "confidence": 0.7,
+          "date": "2026-09-10"
+        }
+      ]
+    }
+  }
+}
